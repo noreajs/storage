@@ -1,0 +1,33 @@
+{
+  "name": "@noreajs/storage",
+  "version": "0.0.0",
+  "description": "Upload and store files easily",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node dist/test-server/app.js",
+    "test": "echo \"Not specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noreajs/storage.git"
+  },
+  "keywords": [
+    "storage",
+    "norea",
+    "noreajs"
+  ],
+  "author": "Arnold L.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noreajs/storage/issues"
+  },
+  "homepage": "https://github.com/noreajs/storage#readme",
+  "devDependencies": {
+    "@noreajs/core": "^1.1.1",
+    "@types/multer": "^1.4.3",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+    "multer": "^1.4.2"
+  }
+}
