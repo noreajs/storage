@@ -2,6 +2,7 @@ import { NoreaBootstrap } from "@noreajs/core";
 import { Request, Response } from "express";
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 import { downloadLocalFile } from "../storage/download";
 
 const storage = multer.diskStorage({});
@@ -23,9 +24,7 @@ const api = new NoreaBootstrap(
       app.route("/upload").post([
         multer({
           storage: multer.diskStorage({
-            destination: function (req, file, cb) {
-              cb(null, "uploads");
-            },
+            destination: "uploads",
             filename: function (req, file, cb) {
               const uniqueSuffix =
                 Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -41,7 +40,8 @@ const api = new NoreaBootstrap(
     middlewares: (app) => {},
   },
   {
-    beforeStart: (app) => {},
+    beforeStart: (app) => {
+    },
   }
 );
 
