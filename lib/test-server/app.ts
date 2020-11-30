@@ -2,10 +2,13 @@ import { NoreaBootstrap } from "@noreajs/core";
 import { Request, Response } from "express";
 import multer from "multer";
 import path from "path";
-import fs from "fs";
 import { downloadLocalFile } from "../storage/download";
+import GoogleCloudStorage from "../storage/GoogleCloudStorage";
 
-const storage = multer.diskStorage({});
+const storage = new GoogleCloudStorage({
+  bucketName: "gitfama-storage",
+  keyFilePath: "./google-cloud-key.json",
+});
 
 const api = new NoreaBootstrap(
   {
@@ -23,14 +26,7 @@ const api = new NoreaBootstrap(
       ]);
       app.route("/upload").post([
         multer({
-          storage: multer.diskStorage({
-            destination: "uploads",
-            filename: function (req, file, cb) {
-              const uniqueSuffix =
-                Date.now() + "-" + Math.round(Math.random() * 1e9);
-              cb(null, file.fieldname + "-" + uniqueSuffix);
-            },
-          }),
+          storage: storage,
         }).single("image"),
         (req: Request, res: Response) => {
           res.send(req.file);
@@ -40,8 +36,7 @@ const api = new NoreaBootstrap(
     middlewares: (app) => {},
   },
   {
-    beforeStart: (app) => {
-    },
+    beforeStart: (app) => {},
   }
 );
 
