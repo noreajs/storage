@@ -9,3 +9,4 @@ export type {
   DestinationFuncType,
 } from "./storage/GoogleCloudStorage";
 export { DeleteGCSFileOptions, deleteGCSFile } from "./storage/deleteGCSFile";
+export { StorageFilter } from "./storage/filters";
