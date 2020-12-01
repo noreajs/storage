@@ -1,4 +1,4 @@
-import { imageFilter } from "./ImageFilter";
+import { imageFilter } from "./imageFilter";
 import { audioFilter } from "./audioFilter";
 
 export namespace StorageFilter {
