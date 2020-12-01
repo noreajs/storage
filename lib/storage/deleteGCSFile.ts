@@ -1,9 +1,9 @@
 import path from "path";
-import { Storage } from "@google-cloud/storage";
+import { GoogleCloudStorage } from "./GoogleCloudStorage";
 
 export type DeleteGCSFileOptions = {
-  storage: Storage;
-  bucketName: string;
+  storage: GoogleCloudStorage;
+  bucketName?: string;
   fileName: string;
 };
 
@@ -15,8 +15,8 @@ export const deleteGCSFile = async (options: DeleteGCSFileOptions) => {
   // real file name
   const fileName = path.basename(options.fileName);
   // delete the file
-  return await options.storage
-    .bucket(options.bucketName)
+  return await options.storage.storage
+    .bucket(options.bucketName ?? options.storage.bucketName)
     .file(fileName)
     .delete({
       ignoreNotFound: true,
