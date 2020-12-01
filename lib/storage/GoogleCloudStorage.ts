@@ -2,48 +2,41 @@ import { Storage } from "@google-cloud/storage";
 import { Request } from "express";
 import path from "path";
 
-type StorageCallbackType = (error: any, data?: any) => void | Promise<void>;
+export type StorageCallbackType = (error: any, data?: any) => void | Promise<void>;
 
-type DestinationCallbackFunc = (
+export type DestinationCallbackFunc = (
   error: Error | null,
   destination: string
 ) => void | Promise<void>;
 
-type DestinationFuncType = (
+export type DestinationFuncType = (
   req: Request,
   file: any,
   cb: DestinationCallbackFunc
 ) => void;
 
-type FilenameCallbackFunc = (
+export type FilenameCallbackFunc = (
   error: Error | null,
   filename: string
 ) => void | Promise<void>;
 
-type FilenameFuncType = (
+export type FilenameFuncType = (
   req: Request,
   file: any,
   cb: FilenameCallbackFunc
 ) => void;
 
-interface GoogleCloudStorageOptions {
+export interface GoogleCloudStorageOptions {
   destination?: DestinationFuncType;
   filename?: FilenameFuncType;
   keyFilePath: string;
   bucketName: string;
 }
 
-interface File {
-  fieldname: "image";
-  originalname: "34209333.jfif";
-  encoding: "7bit";
-  mimetype: "application/octet-stream";
-}
-
 /**
  * Google cloud storage
  */
-class GoogleCloudStorage {
+export class GoogleCloudStorage {
   keyFilePath: string;
   bucketName: string;
   storage: Storage;
@@ -162,5 +155,3 @@ class GoogleCloudStorage {
     }
   }
 }
-
-export default GoogleCloudStorage;

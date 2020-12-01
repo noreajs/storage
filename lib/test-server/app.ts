@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import multer from "multer";
 import path from "path";
 import { downloadLocalFile } from "../storage/download";
-import GoogleCloudStorage from "../storage/GoogleCloudStorage";
+import { GoogleCloudStorage } from "../storage/GoogleCloudStorage";
 
 const storage = new GoogleCloudStorage({
   bucketName: "gitfama-storage",
