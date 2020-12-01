@@ -155,7 +155,9 @@ class GoogleCloudStorage {
         await this.storage
           .bucket(this.bucketName)
           .file(this.currentFileName)
-          .delete();
+          .delete({
+            ignoreNotFound: true,
+          });
       } catch (error) {}
     }
   }
