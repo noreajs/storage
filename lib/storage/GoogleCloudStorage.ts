@@ -120,7 +120,7 @@ export class GoogleCloudStorage {
           stream.end(file.buffer);
 
           cb(null, {
-            path: meta[0].mediaLink,
+            path: meta[0].selfLink,
             meta: meta[0],
           });
         });
