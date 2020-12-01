@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import multer from "multer";
 import path from "path";
 import { downloadLocalFile } from "../storage/download";
+import { StorageFilter } from "../storage/filters";
 import { GoogleCloudStorage } from "../storage/GoogleCloudStorage";
 
 const storage = new GoogleCloudStorage({

@@ -1,3 +1,4 @@
+import { Request } from "express";
 import path from "path";
 
 /**
@@ -35,7 +36,7 @@ const imageExtensions = [
 
 /**
  * Filter image files
- * 
+ *
  * @param req express request
  * @param file uploaded file
  * @param cb callback
