@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "start": "tsc && node dist/test-server/app.js",
-    "test": "echo \"Not specified\"",
-    "postinstall": "tsc"
+    "test": "echo \"Not specified\""
   },
   "repository": {
     "type": "git",

@@ -5,11 +5,17 @@ import path from "path";
 import { downloadLocalFile } from "../storage/download";
 import { StorageFilter } from "../storage/filters";
 import { GoogleCloudStorage } from "../storage/GoogleCloudStorage";
+import { StorageMiddleware } from "../storage/middlewares";
 
 const storage = new GoogleCloudStorage({
   bucketName: "gitfama-storage",
   keyFilePath: "./google-cloud-key.json",
 });
+
+const upload = multer({
+  storage: storage,
+  fileFilter: StorageFilter.image,
+}).single("image");
 
 const api = new NoreaBootstrap(
   {
@@ -26,11 +32,10 @@ const api = new NoreaBootstrap(
         },
       ]);
       app.route("/upload").post([
-        multer({
-          storage: storage,
-        }).single("image"),
+        upload,
+        StorageMiddleware.errorResponseInJson,
         (req: Request, res: Response) => {
-          res.send(req.file);
+          return res.send(req.file);
         },
       ]);
     },

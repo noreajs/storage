@@ -55,8 +55,9 @@ export const audioFilter = function (
     cb(
       {
         message: "The file must be an audio",
+        file: file
       },
-      true
+      false
     );
   }
 };

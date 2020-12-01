@@ -10,3 +10,4 @@ export type {
 } from "./storage/GoogleCloudStorage";
 export { DeleteGCSFileOptions, deleteGCSFile } from "./storage/deleteGCSFile";
 export { StorageFilter } from "./storage/filters";
+export { StorageMiddleware } from "./storage/middlewares";

@@ -1,4 +1,5 @@
 import { Request } from "express";
+import multer from "multer";
 import path from "path";
 
 /**
@@ -44,7 +45,7 @@ const imageExtensions = [
 export const imageFilter = function (
   req: Request,
   file: Express.Multer.File,
-  cb: (error: any, allowed: boolean) => void
+  cb: (error: any, acceptFile: boolean) => void
 ) {
   // mime type of extension is valid
   if (
@@ -57,8 +58,9 @@ export const imageFilter = function (
     cb(
       {
         message: "The file must be an image",
+        file: file,
       },
-      true
+      false
     );
   }
 };
