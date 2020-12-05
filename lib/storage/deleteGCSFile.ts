@@ -1,4 +1,5 @@
 import path from "path";
+import { parseUrl } from "query-string";
 import { GoogleCloudStorage } from "./GoogleCloudStorage";
 
 export type DeleteGCSFileOptions = {
@@ -12,8 +13,12 @@ export type DeleteGCSFileOptions = {
  * @param options options
  */
 export const deleteGCSFile = async (options: DeleteGCSFileOptions) => {
+  // parse url
+  const parsedUrl = parseUrl(options.fileName);
+
   // real file name
-  const fileName = path.basename(options.fileName);
+  const fileName = path.basename(parsedUrl.url);
+
   // delete the file
   return await options.storage.storage
     .bucket(options.bucketName ?? options.storage.bucketName)
