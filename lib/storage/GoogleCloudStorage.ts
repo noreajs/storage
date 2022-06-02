@@ -1,8 +1,12 @@
 import { Storage } from "@google-cloud/storage";
 import { Request } from "express";
 import path from "path";
+import { Readable } from "stream";
 
-export type StorageCallbackType = (error: any, data?: any) => void | Promise<void>;
+export type StorageCallbackType = (
+  error: any,
+  data?: any
+) => void | Promise<void>;
 
 export type DestinationCallbackFunc = (
   error: Error | null,
@@ -50,6 +54,60 @@ export class GoogleCloudStorage {
 
     // initialize storage instance
     this.storage = new Storage({ keyFilename: this.keyFilePath });
+  }
+
+  /**
+   * Upload a file to gcs bucket
+   *
+   * @param input file buffer
+   * @param fileName File name
+   * @param mimetype mime type
+   * @param cb callback
+   */
+  async upload(
+    input: Buffer,
+    fileName: string,
+    mimetype: string,
+    cb: StorageCallbackType
+  ) {
+    try {
+      // create local stream
+      const localStream = Readable.from(input);
+
+      // bucket file
+      const bucketFile = this.storage.bucket(this.bucketName).file(fileName);
+
+      // initiate stream on bucket
+      const stream = bucketFile.createWriteStream({
+        metadata: {
+          contentType: mimetype,
+        },
+      });
+
+      // write to the bucket
+      localStream.pipe(stream);
+
+      // on finish
+      stream.on("finish", async () => {
+        // Need to make the file public before you can access it.
+        await bucketFile.makePublic();
+
+        // load meta data
+        const meta = await bucketFile.getMetadata();
+
+        // stream.end(input);
+
+        await cb(null, {
+          path: meta[0].mediaLink,
+          meta: meta[0],
+        });
+      });
+
+      // on error
+      stream.on("error", cb);
+    } catch (error) {
+      cb(error);
+    }
   }
 
   /**
