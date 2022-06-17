@@ -96,9 +96,13 @@ export class GoogleCloudStorage {
         const meta = await bucketFile.getMetadata();
 
         // stream.end(input);
+        const mediaLink = new URL(meta[0].mediaLink);
 
         await cb(null, {
+          publicUrl: `${mediaLink.origin}/${meta[0].bucket}/${meta[0].name}`,
           path: meta[0].mediaLink,
+          filename: meta[0].name,
+          size: Number(meta[0].size),
           meta: meta[0],
         });
       });
@@ -179,6 +183,8 @@ export class GoogleCloudStorage {
 
           cb(null, {
             path: meta[0].mediaLink,
+            filename: meta[0].name,
+            size: Number(meta[0].size),
             meta: meta[0],
           });
         });
