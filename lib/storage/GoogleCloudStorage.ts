@@ -99,6 +99,8 @@ export class GoogleCloudStorage {
         const mediaLink = new URL(meta[0].mediaLink);
 
         await cb(null, {
+          publicStorageUrl: `https://storage.googleapis.com/${meta[0].bucket
+            }/${meta[0].name}`,
           publicUrl: `${mediaLink.origin}/${meta[0].bucket}/${meta[0].name}`,
           path: meta[0].mediaLink,
           filename: meta[0].name,
@@ -215,7 +217,7 @@ export class GoogleCloudStorage {
           .delete({
             ignoreNotFound: true,
           });
-      } catch (error) {}
+      } catch (error) { }
     }
   }
 }
