@@ -5,7 +5,14 @@ import { Readable } from "stream";
 
 export type StorageCallbackType = (
   error: any,
-  data?: any
+  data?: {
+    publicStorageUrl: string,
+    publicUrl: string,
+    path: string,
+    filename: string,
+    size: number,
+    meta: any,
+  }
 ) => void | Promise<void>;
 
 export type DestinationCallbackFunc = (
@@ -181,9 +188,15 @@ export class GoogleCloudStorage {
           // load meta data
           const meta = await bucketFile.getMetadata();
 
+          // stream.end(input);
+          const mediaLink = new URL(meta[0].mediaLink);
+
           stream.end(file.buffer);
 
           cb(null, {
+            publicStorageUrl: `https://storage.googleapis.com/${meta[0].bucket
+              }/${meta[0].name}`,
+            publicUrl: `${mediaLink.origin}/${meta[0].bucket}/${meta[0].name}`,
             path: meta[0].mediaLink,
             filename: meta[0].name,
             size: Number(meta[0].size),
