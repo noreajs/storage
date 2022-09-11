@@ -3,16 +3,18 @@ import { Request } from "express";
 import path from "path";
 import { Readable } from "stream";
 
+export type UploadedFileType = {
+  publicStorageUrl: string,
+  publicUrl: string,
+  path: string,
+  filename: string,
+  size: number,
+  meta: any,
+};
+
 export type StorageCallbackType = (
   error: any,
-  data?: {
-    publicStorageUrl: string,
-    publicUrl: string,
-    path: string,
-    filename: string,
-    size: number,
-    meta: any,
-  }
+  data?: UploadedFileType
 ) => void | Promise<void>;
 
 export type DestinationCallbackFunc = (
